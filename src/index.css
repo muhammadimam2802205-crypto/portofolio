@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   BASE / ROOT
+   ============================================================ */
+html {
+  color-scheme: dark; /* ← fix utama: autofill, scrollbar, form native */
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   GLOBAL FIX — JANGAN ADA TEKS HITAM DI BACKGROUND GELAP
+   ============================================================ */
+
+/* Link: warisi warna parent, jangan biru default browser */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Form controls */
+input,
+textarea,
+select {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Fix Chrome autofill — defaultnya background kuning + text hitam */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Selection highlight marun */
+::selection {
+  background-color: rgba(168, 50, 50, 0.5);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: rgba(168, 50, 50, 0.5);
+  color: #ffffff;
+}
+
+/* ============================================================
+   SCROLLBAR KUSTOM
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 50, 50, 0.4);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 50, 50, 0.7);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(168, 50, 50, 0.4) #0a0a0a;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+/* 1. Marquee — teks horizontal scroll infinite loop
+      Dipakai oleh <Marquee /> di App.jsx */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* 2. Gradient shift — gradient sweep untuk border foto About
+      Dipakai oleh AboutPhoto (border foto) */
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 3. Subtle pulse — untuk badge / dot indikator
+      Opsional, dipakai oleh beberapa elemen */
+@keyframes subtlePulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* 4. Shimmer — efek kilau melintang (opsional, future use) */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY — hormati preferensi "kurangi gerakan"
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
