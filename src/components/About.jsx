@@ -27,11 +27,7 @@ const techStack = [
   { name: 'REST API', slug: 'swagger' }, { name: 'Prisma', slug: 'prisma' }, { name: 'Next.js', slug: 'nextdotjs' },
 ]
 
-const photos = [
-  '/about.png',
-  '/about-2.png', 
-  '/about-3.png', 
-]
+const photos = ['/about.png', '/about-2.png', '/about-3.png']
 
 /* ============================================================
    MagneticHeading
@@ -137,50 +133,155 @@ function RoleCard({ role, index, active, setActive }) {
 }
 
 /* ============================================================
-   TechStack3D
+   MechanicalKeycap — Tombol 3D Interaktif
+   ============================================================ */
+function MechanicalKeycap({ tech, index }) {
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40, scale: 0.8 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20, delay: index * 0.03 }}
+      className="relative group w-full h-full"
+      style={{ perspective: '800px' }}
+    >
+      {/* Animasi Ketikan Otomatis (Typing Wave) */}
+      <motion.div
+        animate={{
+          y: [0, 10, 0],
+          transition: { delay: 1.2 + (index * 0.08), duration: 0.4, ease: "easeInOut" }
+        }}
+        className="relative w-full h-full"
+      >
+        {/* 1. LUBANG CHASSIS (Dasar Hitam Cekung) */}
+        <div className="absolute inset-0 rounded-xl bg-[#121212] shadow-[inset_0_4px_10px_rgba(0,0,0,0.9)] border border-white/5" />
+
+        {/* 2. KEYCAP (Tombol Putih Bersih) */}
+        <motion.div
+          onHoverStart={() => setIsHovered(true)}
+          onHoverEnd={() => setIsHovered(false)}
+          whileHover={{ y: -2 }} // Sedikit terangkat
+          whileTap={{ y: 8, scale: 0.95 }} // Tertelan ke dalam saat diklik
+          transition={{ type: "spring", stiffness: 600, damping: 20 }}
+          className="relative z-10 flex flex-col items-center justify-center rounded-xl bg-gradient-to-b from-[#ffffff] to-[#f0f0f0] p-3 md:p-4 shadow-[0_4px_0_#d4d4d4,0_6px_10px_rgba(0,0,0,0.1)] cursor-pointer border border-white"
+        >
+          {/* Logo dengan Efek 3D Pop-Out */}
+          <motion.div 
+            animate={{ 
+              z: isHovered ? 30 : 0, 
+              scale: isHovered ? 1.15 : 1,
+              filter: isHovered ? 'drop-shadow(0 8px 12px rgba(168,50,50,0.25))' : 'none'
+            }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center relative z-20 transition-all duration-300"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <img
+              src={`https://cdn.simpleicons.org/${tech.slug}/404040`}
+              alt={tech.name}
+              loading="lazy"
+              className={`w-full h-full object-contain transition-all duration-300 ${isHovered ? 'brightness-50' : ''}`}
+            />
+          </motion.div>
+          
+          {/* Teks Minimalis */}
+          <span className={`mt-3 text-[10px] md:text-[11px] font-bold tracking-wide transition-colors duration-300 relative z-20 ${isHovered ? 'text-maroon' : 'text-neutral-500'}`}>
+            {tech.name}
+          </span>
+
+          {/* Maroon Ambient Glow (Menyala dari dalam saat hover) */}
+          <div className={`absolute inset-0 rounded-xl bg-gradient-to-t from-maroon/10 to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
+          
+          {/* Kilau Kaca (Shine) melintas */}
+          <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+            <div className="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-20deg] transition-all duration-500 ease-out group-hover:left-[150%]" />
+          </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+/* ============================================================
+   TechStack3D — Chassis Tilt Effect
    ============================================================ */
 function TechStack3D({ items }) {
+  // Motion values untuk 3D Tilt
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 })
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 })
+  
+  // Konversi posisi mouse ke derajat rotasi
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"])
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"])
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const width = rect.width
+    const height = rect.height
+    const mouseX = e.clientX - rect.left
+    const mouseY = e.clientY - rect.top
+    const xPct = mouseX / width - 0.5
+    const yPct = mouseY / height - 0.5
+    x.set(xPct)
+    y.set(yPct)
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
   return (
     <div className="mt-12">
-      <p className="mb-4 text-[10px] tracking-[0.35em] uppercase text-neutral-400 font-semibold">Tech Stack</p>
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4" style={{ perspective: '1000px' }}>
-        {items.map((tech) => (
-          <motion.div
-            key={tech.name}
-            whileHover={{ scale: 1.05, rotateX: -10, rotateY: 10, z: 30, boxShadow: "0 20px 25px -5px rgba(168, 50, 50, 0.1), 0 10px 10px -5px rgba(168, 50, 50, 0.04)" }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            style={{ transformStyle: 'preserve-3d' }}
-            className="group relative flex flex-col items-center justify-center rounded-2xl border border-neutral-200 bg-white p-3 md:p-4 shadow-sm transition-colors duration-300 hover:border-maroon/40"
-          >
-            <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center transition-transform duration-500 ease-out group-hover:translate-z-[25px] group-hover:-translate-y-1" style={{ transformStyle: 'preserve-3d' }}>
-              <img src={`https://cdn.simpleicons.org/${tech.slug}/404040`} alt={tech.name} loading="lazy" className="w-full h-full object-contain transition-all duration-300 group-hover:scale-110 group-hover:brightness-75 group-hover:drop-shadow-md" />
-            </div>
-            <span className="mt-3 text-[10px] md:text-[11px] font-medium text-neutral-500 group-hover:text-maroon transition-colors duration-300" style={{ transformStyle: 'preserve-3d' }}>{tech.name}</span>
-            <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-              <div className="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] transition-all duration-700 ease-out group-hover:left-[150%]" />
-            </div>
-          </motion.div>
-        ))}
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-[10px] tracking-[0.35em] uppercase text-neutral-400 font-semibold">Tech Stack</p>
+        <span className="text-[10px] tracking-widest uppercase text-maroon font-medium animate-pulse flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 bg-maroon rounded-full" /> Interactive
+        </span>
       </div>
+      
+      {/* Chassis 3D Tilt Wrapper */}
+      <motion.div 
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        className="p-4 md:p-6 bg-[#1a1a1a] rounded-2xl border border-[#2a2a2a] shadow-2xl relative"
+      >
+        {/* Grid Tombol */}
+        <div 
+          className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4 relative z-10"
+          style={{ transform: "translateZ(20px)" }} // Sedikit terangkat dari bodi
+        >
+          {items.map((tech, i) => (
+            <MechanicalKeycap key={tech.name} tech={tech} index={i} />
+          ))}
+        </div>
+
+        {/* Gradasi Halus untuk Bodi Keyboard */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+      </motion.div>
     </div>
   )
 }
 
 /* ============================================================
-   AboutPhoto (Tanpa Badge Open to Work)
+   AboutPhoto
    ============================================================ */
 function AboutPhoto() {
   const wrapRef = useRef(null)
   const [index, setIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
 
-  // Parallax Kursor
   const px = useMotionValue(0)
   const py = useMotionValue(0)
   const spx = useSpring(px, { stiffness: 120, damping: 22, mass: 0.35 })
   const spy = useSpring(py, { stiffness: 120, damping: 22, mass: 0.35 })
 
-  // Parallax Scroll
   const { scrollYProgress } = useScroll({ target: wrapRef, offset: ['start end', 'end start'] })
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
   const photoY = useTransform(smoothProgress, [0, 1], [-40, 40])
@@ -208,40 +309,30 @@ function AboutPhoto() {
       onClick={handleNextPhoto}
       style={{ perspective: '1000px' }}
     >
-      {/* Bingkai Belakang (Tumpukan Kertas) */}
       <div className="absolute inset-0 z-[1] rounded-sm bg-neutral-200 border border-neutral-300 rotate-6 translate-x-4 translate-y-4 transition-all duration-700 ease-out group-hover:rotate-8 group-hover:translate-x-5 group-hover:translate-y-5 shadow-lg" />
       <div className="absolute inset-0 z-[2] rounded-sm bg-neutral-100 border border-neutral-200 rotate-3 translate-x-2 translate-y-2 transition-all duration-700 ease-out group-hover:rotate-4 group-hover:translate-x-3 group-hover:translate-y-3 shadow-md" />
 
-      {/* Foto Utama (Polaroid) */}
       <motion.div
         style={{ y: photoY }}
         className="relative z-10 rounded-sm bg-white p-3 pb-14 shadow-xl border border-neutral-200 transition-transform duration-500 group-hover:-translate-y-2"
       >
         <motion.div style={{ x: spx, y: spy }} className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-100 border border-neutral-100">
           
-          {/* ANIMASI KERTAS TERLEMPAR */}
           <AnimatePresence mode="popLayout">
             <motion.img
               key={index}
               src={photos[index]}
-              alt="Muhammad Imam Al Ma'ruf"
+              alt="Muhammad Imam"
               loading="eager"
               draggable={false}
               initial={{ scale: 0.9, opacity: 0, rotate: -5 }}
               animate={{ scale: 1, opacity: 1, rotate: 0 }}
-              exit={{ 
-                x: 300, 
-                y: -50, 
-                rotate: 25, 
-                opacity: 0,
-                transition: { duration: 0.5, ease: "easeIn" }
-              }}
+              exit={{ x: 300, y: -50, rotate: 25, opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="absolute inset-0 h-full w-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700 ease-out"
             />
           </AnimatePresence>
           
-          {/* Overlay Petunjuk Klik */}
           <div className={`absolute inset-0 bg-black/40 flex flex-col items-center justify-center transition-opacity duration-300 z-20 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
             <div className="bg-white/20 backdrop-blur-md p-3 rounded-full text-white mb-2 transform scale-90 group-hover:scale-100 transition-transform">
               <MousePointerClick size={24} />
@@ -250,9 +341,8 @@ function AboutPhoto() {
           </div>
         </motion.div>
 
-        {/* Teks Bawah Polaroid */}
         <div className="absolute bottom-4 left-0 w-full text-center px-4 flex items-center justify-between">
-          <span className="font-display text-xs tracking-wider text-neutral-800 uppercase">uhammad Imam Al Ma'ruf</span>
+          <span className="font-display text-xs tracking-wider text-neutral-800 uppercase">Muhammad Imam</span>
           <span className="text-[9px] text-neutral-400 font-medium tracking-widest uppercase">{index + 1} / {photos.length}</span>
         </div>
       </motion.div>
@@ -261,7 +351,7 @@ function AboutPhoto() {
 }
 
 /* ============================================================
-   MAIN ABOUT (3D FOLD REVEAL)
+   MAIN ABOUT
    ============================================================ */
 export default function About() {
   const [activeRole, setActiveRole] = useState(null)
@@ -280,7 +370,7 @@ export default function About() {
       <motion.section 
         ref={sectionRef}
         style={{ rotateX, scale, y, opacity }}
-        className="relative bg-[#fafafa] pt-20 md:pt-28 pb-20 md:pb-28 rounded-t-[2.5rem] md:rounded-t-[4rem] shadow-[0_-20px_80px_rgba(0,0,0,0.8)] overflow-hidden origin-top"
+        className="relative bg-[#fafafa] pt-20 md:pt-28 pb-20 md:pb-28 rounded-t-[2.5rem] md:rounded-t-[4rem] overflow-hidden origin-top"
       >
         <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(circle, #d4d4d8 1px, transparent 1px)', backgroundSize: '24px 24px', maskImage: 'linear-gradient(to bottom, white, transparent)', WebkitMaskImage: 'linear-gradient(to bottom, white, transparent)' }} />
 
@@ -293,7 +383,6 @@ export default function About() {
           </SectionReveal>
 
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 items-start">
-            
             <div className="relative">
               <SectionReveal delay={0.1}>
                 <AboutPhoto />

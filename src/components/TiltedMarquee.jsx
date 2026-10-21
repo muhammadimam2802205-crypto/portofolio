@@ -8,17 +8,18 @@ export default function TiltedMarquee({ items = [] }) {
       
       {/* ====================================================
           1. LATAR BELAKANG HITAM + SHADOW MIRING
+          Gunakan satuan vw (4.4vw) agar kemiringan selalu sejajar 
+          dengan rotasi 2.5deg di ukuran layar apapun (HP/Desktop).
       ==================================================== */}
       <div
         className="absolute inset-0 z-0"
-        // GUNAKAN DROP-SHADOW: Membuat bayangan mengikuti bentuk clipPath
-        // Nilai -15px artinya bayangan dilempar ke atas (ke area putih)
-        style={{ filter: 'drop-shadow(0px -15px 25px rgba(0,0,0,0.4))' }}
+        style={{ filter: 'drop-shadow(0px -15px 30px rgba(0,0,0,0.3))' }}
       >
         <div
           className="absolute inset-0 bg-[#0a0a0a]"
-          // UBAH 100% MENJADI 105%: Trik agar garis putih di bawah hilang total
-          style={{ clipPath: 'polygon(0 3rem, 100% 0, 100% 105%, 0 105%)' }}
+          // 4.4vw adalah nilai presisi agar sejajar dengan rotasi 2.5deg
+          // 105% memastikan tidak ada garis putih di bagian bawah
+          style={{ clipPath: 'polygon(0 4.4vw, 100% 0, 100% 105%, 0 105%)' }}
         >
           {/* Efek Glow marun di belakang teks */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(168,50,50,0.15)_0%,transparent_70%)] pointer-events-none" />
@@ -26,7 +27,8 @@ export default function TiltedMarquee({ items = [] }) {
       </div>
 
       {/* ====================================================
-          2. KONTAINER TEKS 
+          2. KONTAINER TEKS (Sesuai Permintaanmu)
+          Tetap menggunakan w-[120%] -left-[10%] -rotate-[2.5deg]
       ==================================================== */}
       <div className="relative z-10 w-[120%] -left-[10%] -rotate-[2.5deg] py-10 md:py-19">
         
