@@ -1,81 +1,180 @@
-import { motion } from 'motion/react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Github } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { projects } from '../data/projects'
+import { projects, statusMeta } from '../data/projects'
 import SectionReveal from './SectionReveal'
-import SectionTitle from './SectionTitle'
-import { TiltCard } from './animations'
+import BrowserFrame from './BrowserFrame'
+import { TornEdge } from './PaperBits'
+
+const GITHUB = 'https://github.com/muhammadimam2802205-crypto'
+
+const tilts = [
+  '-rotate-[0.5deg]',
+  'rotate-[0.35deg]',
+  'rotate-[0.2deg]',
+  '-rotate-[0.35deg]',
+  '-rotate-[0.25deg]',
+  'rotate-[0.4deg]',
+]
+
+function ProjectCard({ project, index }) {
+  const status = statusMeta[project.status]
+
+  return (
+    <SectionReveal delay={index * 0.05} className="h-full">
+      <article
+        className={`paper-card group relative flex h-full flex-col border border-ink/20 p-4 shadow-paper transition-all duration-300 hover:-translate-y-1 hover:rotate-0 md:p-5 ${tilts[index % tilts.length]}`}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="font-editorial text-lg italic leading-none text-accent md:text-xl">
+              {project.category}
+            </p>
+            <h3 className="mt-2 font-display text-3xl uppercase leading-[0.92] text-ink md:text-4xl">
+              <Link
+                to={`/project/${project.id}`}
+                className="transition-colors hover:text-accent"
+              >
+                {project.shortTitle}
+              </Link>
+            </h3>
+          </div>
+
+          <div className="shrink-0 text-right">
+            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-ink/40">
+              {project.year}
+            </p>
+            <span
+              className={`mt-2 inline-flex items-center gap-1.5 rounded-full border px-2 py-1 text-[9px] font-medium ${status.className}`}
+            >
+              <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+              {status.label}
+            </span>
+          </div>
+        </div>
+
+        <Link
+          to={`/project/${project.id}`}
+          className="mt-4 block"
+          aria-label={`Lihat detail ${project.title}`}
+        >
+          <BrowserFrame
+            src={project.image}
+            alt={`Thumbnail proyek ${project.title}`}
+            url={`imam.dev/project/${project.id}`}
+            aspect="aspect-[4/3]"
+            imgClassName="transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        </Link>
+
+        <p className="mt-4 line-clamp-3 text-xs leading-relaxed text-ink/60 md:text-[13px]">
+          {project.summary}
+        </p>
+
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {project.stack.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
+              className="border border-ink/15 bg-paper/60 px-2 py-0.5 text-[9px] uppercase tracking-[0.06em] text-ink/50"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.stack.length > 4 && (
+            <span className="px-1 py-0.5 text-[9px] text-ink/35">
+              +{project.stack.length - 4}
+            </span>
+          )}
+        </div>
+
+        <div className="mt-5 flex items-center justify-between gap-3 border-t border-ink/15 pt-4">
+          <a
+            href={project.repo}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-ink/50 transition-colors hover:text-ink"
+          >
+            <Github size={13} />
+            Repository
+          </a>
+          <Link
+            to={`/project/${project.id}`}
+            className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-ink transition-colors hover:text-accent"
+          >
+            Study Case
+            <ArrowUpRight size={13} />
+          </Link>
+        </div>
+      </article>
+    </SectionReveal>
+  )
+}
 
 export default function Projects() {
   return (
-    <section id="project" className="relative bg-base border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
+    <section id="project" className="relative scroll-mt-20 pb-16 md:pb-24">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
         <SectionReveal>
-          <SectionTitle
-            eyebrow="Proyek Pilihan"
-            title="Beberapa hal yang saya bangun."
-            description="Pilihan proyek terbaru — dari backend API hingga aplikasi mobile dan dashboard web."
-          />
+          <header className="mb-9 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="font-editorial text-2xl italic leading-none text-accent md:text-3xl">
+                Selected
+              </p>
+              <h2 className="mt-1 font-display text-5xl uppercase leading-[0.9] text-ink md:text-7xl">
+                Projects
+              </h2>
+            </div>
+            <div className="max-w-sm md:text-right">
+              <p className="text-sm leading-relaxed text-ink/60">
+                Hanya proyek yang benar-benar saya bangun dan ada kode
+                sumbernya — aplikasi web, backend, sistem informasi, dan
+                pemetaan.
+              </p>
+              <p className="mt-2 text-[9px] font-semibold uppercase tracking-[0.22em] text-ink/40">
+                {String(projects.length).padStart(2, '0')} Case Studies · 2024 — 2026
+              </p>
+            </div>
+          </header>
         </SectionReveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {projects.map((p, i) => (
-            <SectionReveal key={p.id} delay={i * 0.08}>
-              <TiltCard intensity={6} className="h-full">
-                <div className="group h-full flex flex-col rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-maroon-light/60 transition-colors duration-300">
-                  {/* Thumbnail */}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-white/5">
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-base/80 via-transparent to-transparent" />
-                    <span className="absolute top-3 left-3 text-[10px] tracking-[0.25em] uppercase px-2.5 py-1 rounded-full bg-base/70 backdrop-blur-sm border border-white/10 text-white/70">
-                      {p.category}
-                    </span>
-                  </div>
-
-                  {/* Body */}
-                  <div className="flex flex-col flex-1 p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="font-display text-lg md:text-xl text-white leading-tight">
-                        {p.title}
-                      </h3>
-                      <span className="text-xs text-white/40 shrink-0">
-                        {p.year}
-                      </span>
-                    </div>
-                    <p className="mt-3 text-sm text-white/60 leading-relaxed line-clamp-3">
-                      {p.summary}
-                    </p>
-
-                    {/* Stack chips */}
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {p.stack.map((s) => (
-                        <span
-                          key={s}
-                          className="text-[10px] px-2 py-0.5 rounded-full border border-white/10 text-white/50"
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* CTA */}
-                    <Link
-                      to={`/project/${p.id}`}
-                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-maroon-light hover:text-white transition-colors duration-300"
-                    >
-                      Lihat Detail
-                      <ArrowUpRight size={14} />
-                    </Link>
-                  </div>
-                </div>
-              </TiltCard>
-            </SectionReveal>
+        <div className="grid gap-6 md:grid-cols-2 md:gap-8">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
           ))}
+
+          <SectionReveal delay={0.1} className="h-full md:col-span-2">
+            <a
+              href={GITHUB}
+              target="_blank"
+              rel="noreferrer"
+              className="paper-card group relative flex h-full min-h-[240px] rotate-[0.2deg] flex-col justify-between overflow-hidden border border-ink/20 p-6 shadow-paper transition-all duration-300 hover:-translate-y-1 hover:rotate-0 md:flex-row md:items-end md:gap-10 md:p-8"
+            >
+              <TornEdge className="absolute -right-1 top-8 h-20 w-3 text-ink" />
+              <div>
+                <p className="font-editorial text-xl italic text-accent">
+                  Lebih banyak di
+                </p>
+                <h3 className="mt-1 font-display text-4xl uppercase leading-none text-ink md:text-5xl">
+                  GitHub
+                </h3>
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-ink/60">
+                  Repo, eksperimen, dan proyek lain yang sedang saya kerjakan.
+                </p>
+              </div>
+              <div className="mt-7 flex items-end justify-between gap-6 border-t border-ink/15 pt-4 md:mt-0 md:w-[320px] md:shrink-0 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+                <div className="min-w-0">
+                  <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-ink/40">
+                    Semua repositori
+                  </p>
+                  <p className="mt-1 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-ink/55">
+                    @muhammadimam2802205-crypto
+                  </p>
+                </div>
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink text-paper transition-colors group-hover:bg-accent">
+                  <ArrowUpRight size={18} />
+                </span>
+              </div>
+            </a>
+          </SectionReveal>
         </div>
       </div>
     </section>

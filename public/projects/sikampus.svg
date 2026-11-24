@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Cover SiKampus, dashboard produktivitas mahasiswa">
+  <defs>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M11 11l7 7M18 11l-7 7" fill="none" stroke="#171614" stroke-opacity=".06" stroke-width="1.3"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="900" fill="#f5f0e3"/>
+  <rect width="1200" height="900" fill="url(#grid)"/>
+
+  <g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+    <path d="M64 72h1072" stroke="#171614" stroke-opacity=".2"/>
+    <text x="64" y="56" font-size="12" font-weight="700" letter-spacing="3.4" fill="#171614" fill-opacity=".5">CASE STUDY · 06</text>
+    <text x="1136" y="56" font-size="12" font-weight="700" letter-spacing="3.4" fill="#171614" fill-opacity=".5" text-anchor="end">PORTFOLIO · 2026</text>
+  </g>
+
+  <g font-family="Impact, 'Arial Narrow Bold', 'Arial Black', sans-serif">
+    <text x="62" y="264" font-size="96" letter-spacing="1" fill="#171614">SIKAMPUS</text>
+    <text x="62" y="344" font-size="64" letter-spacing="1" fill="none" stroke="#171614" stroke-width="1.8">DASHBOARD</text>
+  </g>
+
+  <g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+    <text x="64" y="406" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="33" fill="#7c3131">Jadwal, tenggat, anggaran, dan agenda.</text>
+    <text x="64" y="450" font-size="19" fill="#171614" fill-opacity=".62">Dashboard produktivitas untuk mahasiswa.</text>
+  </g>
+
+  <g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+    <path d="M64 800h1072" stroke="#171614" stroke-opacity=".2"/>
+    <text x="64" y="838" font-size="15" font-weight="600" letter-spacing="1.2" fill="#171614" fill-opacity=".55">PHP · MySQL · JavaScript · CSS</text>
+    <text x="1136" y="838" font-size="12" font-weight="700" letter-spacing="3" fill="#171614" fill-opacity=".4" text-anchor="end">IMAM.DEV</text>
+  </g>
+
+  <g transform="translate(676 152)" font-family="Inter, 'Segoe UI', Arial, sans-serif">
+    <rect x="7" y="9" width="452" height="524" rx="12" fill="#171614" fill-opacity=".08"/>
+    <rect width="452" height="524" rx="12" fill="#fbf7ec" stroke="#171614" stroke-opacity=".22"/>
+    <path d="M0 36h452" stroke="#171614" stroke-opacity=".16"/>
+    <circle cx="20" cy="18" r="4.5" fill="#a15a4f"/>
+    <circle cx="36" cy="18" r="4.5" fill="#c9a45c"/>
+    <circle cx="52" cy="18" r="4.5" fill="#7f8d63"/>
+    <text x="226" y="22" font-size="11" fill="#171614" fill-opacity=".45" text-anchor="middle">imam.dev/project/sikampus</text>
+
+    <rect x="28" y="56" width="396" height="72" rx="8" fill="#f1ecdd" stroke="#171614" stroke-opacity=".18"/>
+    <circle cx="62" cy="92" r="18" fill="#7c3131"/>
+    <text x="62" y="97" font-size="12" font-weight="700" fill="#f5f0e3" text-anchor="middle">MI</text>
+    <text x="92" y="88" font-size="14" font-weight="700" fill="#171614">Selamat pagi, Imam</text>
+    <text x="92" y="106" font-size="10" fill="#171614" fill-opacity=".45">3 kelas · 2 tenggat minggu ini</text>
+    <rect x="332" y="76" width="72" height="30" rx="15" fill="#171614"/>
+    <text x="368" y="95" font-size="9" font-weight="700" letter-spacing="1.2" fill="#f5f0e3" text-anchor="middle">AGENDA</text>
+
+    <g>
+      <rect x="28" y="146" width="190" height="104" rx="8" fill="#f3e4dc" stroke="#7c3131" stroke-opacity=".4"/>
+      <text x="44" y="172" font-size="9" font-weight="700" letter-spacing="1.6" fill="#7c3131" fill-opacity=".7">JADWAL HARI INI</text>
+      <text x="44" y="200" font-size="22" font-weight="700" fill="#7c3131">3</text>
+      <text x="44" y="222" font-size="10" fill="#171614" fill-opacity=".5">Ruang 2.04 · 08.00</text>
+      <rect x="234" y="146" width="190" height="104" rx="8" fill="#f1ecdd" stroke="#171614" stroke-opacity=".18"/>
+      <text x="250" y="172" font-size="9" font-weight="700" letter-spacing="1.6" fill="#171614" fill-opacity=".4">TENGGAT</text>
+      <text x="250" y="200" font-size="22" font-weight="700" fill="#171614">2</text>
+      <text x="250" y="222" font-size="10" fill="#171614" fill-opacity=".5">Tugas basis data</text>
+    </g>
+
+    <g>
+      <rect x="28" y="268" width="190" height="104" rx="8" fill="#f1ecdd" stroke="#171614" stroke-opacity=".18"/>
+      <text x="44" y="294" font-size="9" font-weight="700" letter-spacing="1.6" fill="#171614" fill-opacity=".4">ANGGARAN</text>
+      <text x="44" y="322" font-size="20" font-weight="700" fill="#171614">Rp 640k</text>
+      <rect x="44" y="338" width="158" height="8" rx="4" fill="#ded5c0"/>
+      <rect x="44" y="338" width="104" height="8" rx="4" fill="#7c3131" fill-opacity=".65"/>
+      <text x="44" y="362" font-size="9" fill="#171614" fill-opacity=".4">65% terpakai</text>
+      <rect x="234" y="268" width="190" height="104" rx="8" fill="#f1ecdd" stroke="#171614" stroke-opacity=".18"/>
+      <text x="250" y="294" font-size="9" font-weight="700" letter-spacing="1.6" fill="#171614" fill-opacity=".4">AGENDA</text>
+      <circle cx="260" cy="318" r="4" fill="#7c3131"/>
+      <text x="274" y="322" font-size="10" fill="#171614" fill-opacity=".6">Seminar kampus</text>
+      <circle cx="260" cy="340" r="4" fill="#a15a4f"/>
+      <text x="274" y="344" font-size="10" fill="#171614" fill-opacity=".6">Rapat himpunan</text>
+      <circle cx="260" cy="362" r="4" fill="#7f8d63"/>
+      <text x="274" y="366" font-size="10" fill="#171614" fill-opacity=".6">Ujian tengah semester</text>
+    </g>
+
+    <g>
+      <rect x="28" y="390" width="396" height="92" rx="8" fill="#fbf7ec" stroke="#171614" stroke-opacity=".18"/>
+      <text x="44" y="414" font-size="9" font-weight="700" letter-spacing="1.6" fill="#171614" fill-opacity=".4">PRODUKTIVITAS</text>
+      <path d="M48 462l38-20 34 8 36-26 34 12 38-30 34 16 32-22" fill="none" stroke="#7c3131" stroke-opacity=".7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="294" cy="400" r="4" fill="#7c3131"/>
+      <path d="M28 482h396" stroke="#171614" stroke-opacity=".08"/>
+    </g>
+
+    <g>
+      <circle cx="38" cy="510" r="4" fill="#7f8d63"/>
+      <text x="50" y="514" font-size="11" fill="#171614" fill-opacity=".5">Semua data tersimpan lokal</text>
+    </g>
+  </g>
+</svg>

@@ -6,66 +6,70 @@
    BASE / ROOT
    ============================================================ */
 html {
-  color-scheme: dark; /* ← fix utama: autofill, scrollbar, form native */
+  color-scheme: light;
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: #eae4d5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  color: #171614;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* ============================================================
-   GLOBAL FIX — JANGAN ADA TEKS HITAM DI BACKGROUND GELAP
-   ============================================================ */
+img {
+  max-width: 100%;
+}
 
-/* Link: warisi warna parent, jangan biru default browser */
+/* ============================================================
+   PAPER SYSTEM
+   ============================================================ */
+.paper-card {
+  background-color: #f5f0e3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px #171614;
+  color: transparent;
+}
+
+/* ============================================================
+   GLOBAL
+   ============================================================ */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Form controls */
 input,
 textarea,
 select {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #171614;
+  background-color: rgba(23, 22, 20, 0.03);
+  border: 1px solid rgba(23, 22, 20, 0.18);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(23, 22, 20, 0.4);
 }
 
-/* Fix Chrome autofill — defaultnya background kuning + text hitam */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
-  -webkit-text-fill-color: #ffffff;
-  -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-/* Selection highlight marun */
 ::selection {
-  background-color: rgba(168, 50, 50, 0.5);
-  color: #ffffff;
+  background-color: #171614;
+  color: #f5f0e3;
 }
 
 ::-moz-selection {
-  background-color: rgba(168, 50, 50, 0.5);
-  color: #ffffff;
+  background-color: #171614;
+  color: #f5f0e3;
 }
 
 /* ============================================================
-   SCROLLBAR KUSTOM
+   SCROLLBAR
    ============================================================ */
 ::-webkit-scrollbar {
   width: 10px;
@@ -73,30 +77,26 @@ select:-webkit-autofill {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #eae4d5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 50, 50, 0.4);
+  background: rgba(23, 22, 20, 0.28);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 50, 50, 0.7);
+  background: rgba(23, 22, 20, 0.5);
 }
 
-/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(168, 50, 50, 0.4) #0a0a0a;
+  scrollbar-color: rgba(23, 22, 20, 0.3) #eae4d5;
 }
 
 /* ============================================================
    KEYFRAMES
    ============================================================ */
-
-/* 1. Marquee — teks horizontal scroll infinite loop
-      Dipakai oleh <Marquee /> di App.jsx */
 @keyframes marquee {
   from {
     transform: translate3d(0, 0, 0);
@@ -106,42 +106,81 @@ select:-webkit-autofill {
   }
 }
 
-/* 2. Gradient shift — gradient sweep untuk border foto About
-      Dipakai oleh AboutPhoto (border foto) */
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
-  50% {
-    background-position: 100% 50%;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* 3. Subtle pulse — untuk badge / dot indikator
-      Opsional, dipakai oleh beberapa elemen */
-@keyframes subtlePulse {
-  0%,
-  100% {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes photoIn {
+  from {
     opacity: 0.4;
+    transform: scale(1.03);
   }
-  50% {
-    opacity: 0.8;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-/* 4. Shimmer — efek kilau melintang (opsional, future use) */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
   }
-  100% {
-    background-position: 200% 0;
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s ease-out both;
+}
+
+.animate-fade-down {
+  animation: fadeDown 0.5s ease-out both;
+}
+
+.animate-photo-in {
+  animation: photoIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-menu-in {
+  animation: menuIn 0.18s ease-out both;
 }
 
 /* ============================================================
-   ACCESSIBILITY — hormati preferensi "kurangi gerakan"
+   ACCESSIBILITY
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *,
